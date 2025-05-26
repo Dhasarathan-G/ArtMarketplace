@@ -660,10 +660,16 @@ a:hover {
 }
 
 .product-description {
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid hsl(var(--border-light));
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid hsl(var(--border-light));
+
+  /* new: limit height and enable scrolling */
+  max-height: 200px;     /* or whatever fits your design */
+  overflow-y: auto;      /* vertical scrollbar when needed */
+  overflow-x: hidden;    /* prevent horizontal scroll */
 }
+
 
 .product-pricing {
     margin-bottom: 2rem;
