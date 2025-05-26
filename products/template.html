@@ -130,39 +130,44 @@
         const stripePublicKey = 'pk_test_51OkXMZF9jGsOGKkWuO3eVOo00nF9KWNlU'; // Using your actual Stripe public key
         const stripe = Stripe(stripePublicKey);
         
-        // Get product slug from URL hash or query parameter
-        let productSlug = null;
-        
-        // Check URL hash first (for client-side routing)
-        if (window.location.hash) {
-            productSlug = window.location.hash.substring(1);
-        }
-        
-        // Fallback to URL search params
-        if (!productSlug) {
-            const urlParams = new URLSearchParams(window.location.search);
-            productSlug = urlParams.get('id');
-        }
-        
         // Load product data when page loads
         document.addEventListener('DOMContentLoaded', function() {
+            // Get product slug from URL query parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const productSlug = urlParams.get('id');
+            
+            console.log('Current URL:', window.location.href);
+            console.log('Product slug from URL:', productSlug);
+            
             if (productSlug) {
                 loadProductData(productSlug);
             } else {
+                console.log('No product slug found in URL');
                 showProductError();
             }
         });
 
         async function loadProductData(slug) {
             try {
+                console.log('Loading product data for slug:', slug);
                 const response = await fetch('/_data/products.json');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
                 const products = await response.json();
+                console.log('Loaded products:', products);
+                console.log('Looking for product with slug:', slug);
                 
                 const product = products.find(p => p.slug === slug);
+                console.log('Found product:', product);
                 
                 if (product) {
                     displayProduct(product);
                 } else {
+                    console.log('Product not found with slug:', slug);
+                    console.log('Available slugs:', products.map(p => p.slug));
                     showProductError();
                 }
             } catch (error) {
