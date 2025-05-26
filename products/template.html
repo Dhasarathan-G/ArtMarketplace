@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title id="pageTitle">Product - ArtMart</title>
+    <meta name="description" content="View artwork details and purchase securely through ArtMart">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="../index.html">
+                    <h1>ArtMart</h1>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="../about.html">About</a>
+                <a href="../sell.html">Sell Art</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Back Navigation -->
+    <div class="container">
+        <div class="back-nav">
+            <a href="../index.html" class="back-link">← Back to Gallery</a>
+        </div>
+    </div>
+
+    <!-- Product Details -->
+    <main class="product-page">
+        <div class="container">
+            <!-- Loading State -->
+            <div class="loading" id="productLoading">
+                <div class="spinner"></div>
+                <p>Loading artwork details...</p>
+            </div>
+
+            <!-- Error State -->
+            <div class="error-message" id="productError" style="display: none;">
+                <h3>Artwork Not Found</h3>
+                <p>The requested artwork could not be found. It may have been sold or removed.</p>
+                <a href="../index.html" class="btn btn-primary">Browse Other Artwork</a>
+            </div>
+
+            <!-- Product Content -->
+            <div class="product-content" id="productContent" style="display: none;">
+                <div class="product-gallery">
+                    <div class="main-image">
+                        <img id="productImage" src="" alt="Artwork" loading="lazy">
+                    </div>
+                </div>
+
+                <div class="product-info">
+                    <div class="product-header">
+                        <h1 id="productTitle">Artwork Title</h1>
+                        <p class="artist-name" id="productArtist">Artist Name</p>
+                        <div class="product-category">
+                            <span id="productCategory">Category</span>
+                        </div>
+                    </div>
+
+                    <div class="product-description">
+                        <h3>Description</h3>
+                        <p id="productDescription">Artwork description...</p>
+                    </div>
+
+                    <div class="product-pricing">
+                        <div class="price">
+                            <span class="currency">₹</span>
+                            <span id="productPrice">0</span>
+                        </div>
+                        <small class="price-note">Price includes all taxes</small>
+                    </div>
+
+                    <div class="product-actions">
+                        <button class="btn btn-primary btn-large" id="buyNowBtn" onclick="initiatePayment()">
+                            <span id="buyBtnText">Buy Now</span>
+                            <div class="btn-spinner" id="btnSpinner" style="display: none;"></div>
+                        </button>
+                        <button class="btn btn-secondary" onclick="shareProduct()">
+                            Share
+                        </button>
+                    </div>
+
+                    <div class="product-meta">
+                        <div class="meta-item">
+                            <strong>Artwork ID:</strong>
+                            <span id="productId">-</span>
+                        </div>
+                        <div class="meta-item">
+                            <strong>Listed:</strong>
+                            <span id="productDate">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Payment Success Modal -->
+    <div class="modal" id="paymentModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Payment Processing</h3>
+            </div>
+            <div class="modal-body">
+                <div class="payment-status" id="paymentStatus">
+                    <div class="spinner"></div>
+                    <p>Processing your payment...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 ArtMart. Connecting artists with art lovers worldwide.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Stripe with public key from environment or fallback
+        const stripePublicKey = 'pk_test_51234567890abcdef'; // This will be replaced with actual key
+        const stripe = Stripe(stripePublicKey);
+        
+        // Get product slug from URL hash or query parameter
+        let productSlug = null;
+        
+        // Check URL hash first (for client-side routing)
+        if (window.location.hash) {
+            productSlug = window.location.hash.substring(1);
+        }
+        
+        // Fallback to URL search params
+        if (!productSlug) {
+            const urlParams = new URLSearchParams(window.location.search);
+            productSlug = urlParams.get('id');
+        }
+        
+        // Load product data when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            if (productSlug) {
+                loadProductData(productSlug);
+            } else {
+                showProductError();
+            }
+        });
+
+        async function loadProductData(slug) {
+            try {
+                const response = await fetch('../_data/products.json');
+                const products = await response.json();
+                
+                const product = products.find(p => p.slug === slug);
+                
+                if (product) {
+                    displayProduct(product);
+                } else {
+                    showProductError();
+                }
+            } catch (error) {
+                console.error('Error loading product:', error);
+                showProductError();
+            }
+        }
+
+        function displayProduct(product) {
+            // Hide loading, show content
+            document.getElementById('productLoading').style.display = 'none';
+            document.getElementById('productContent').style.display = 'block';
+            
+            // Populate product data
+            document.getElementById('pageTitle').textContent = `${product.title} - ArtMart`;
+            document.getElementById('productTitle').textContent = product.title;
+            document.getElementById('productArtist').textContent = product.artist || 'Unknown Artist';
+            document.getElementById('productDescription').textContent = product.description;
+            document.getElementById('productPrice').textContent = product.price.toLocaleString();
+            document.getElementById('productCategory').textContent = product.category || 'Art';
+            document.getElementById('productId').textContent = product.slug;
+            document.getElementById('productDate').textContent = product.dateAdded || 'Recently';
+            
+            // Set image
+            const productImage = document.getElementById('productImage');
+            productImage.src = product.imageUrl;
+            productImage.alt = product.title;
+            
+            // Store product data for payment
+            window.currentProduct = product;
+        }
+
+        function showProductError() {
+            document.getElementById('productLoading').style.display = 'none';
+            document.getElementById('productError').style.display = 'block';
+        }
+
+        async function initiatePayment() {
+            if (!window.currentProduct) {
+                alert('Product data not available');
+                return;
+            }
+
+            const buyBtn = document.getElementById('buyNowBtn');
+            const btnText = document.getElementById('buyBtnText');
+            const btnSpinner = document.getElementById('btnSpinner');
+            
+            // Disable button and show loading
+            buyBtn.disabled = true;
+            btnText.style.display = 'none';
+            btnSpinner.style.display = 'inline-block';
+
+            try {
+                // Show payment modal
+                document.getElementById('paymentModal').style.display = 'flex';
+                
+                // Simulate payment processing (in real implementation, this would create a Stripe payment intent)
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Simulate successful payment
+                showPaymentSuccess();
+                
+            } catch (error) {
+                console.error('Payment error:', error);
+                showPaymentError();
+            } finally {
+                // Re-enable button
+                buyBtn.disabled = false;
+                btnText.style.display = 'inline';
+                btnSpinner.style.display = 'none';
+            }
+        }
+
+        function showPaymentSuccess() {
+            document.getElementById('modalTitle').textContent = 'Payment Successful!';
+            document.getElementById('paymentStatus').innerHTML = `
+                <div class="success-icon">✅</div>
+                <h4>Thank you for your purchase!</h4>
+                <p>You have successfully purchased "${window.currentProduct.title}"</p>
+                <p>You will receive a confirmation email shortly.</p>
+                <button class="btn btn-primary" onclick="closeModal()">Continue Shopping</button>
+            `;
+        }
+
+        function showPaymentError() {
+            document.getElementById('modalTitle').textContent = 'Payment Failed';
+            document.getElementById('paymentStatus').innerHTML = `
+                <div class="error-icon">❌</div>
+                <h4>Payment could not be processed</h4>
+                <p>Please try again or use a different payment method.</p>
+                <button class="btn btn-primary" onclick="closeModal()">Try Again</button>
+            `;
+        }
+
+        function closeModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        function shareProduct() {
+            if (navigator.share && window.currentProduct) {
+                navigator.share({
+                    title: window.currentProduct.title,
+                    text: `Check out this amazing artwork: ${window.currentProduct.title}`,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback: copy URL to clipboard
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('Product link copied to clipboard!');
+                });
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('paymentModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

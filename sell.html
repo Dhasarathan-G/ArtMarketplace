@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sell Your Art - ArtMart</title>
+    <meta name="description" content="List your artwork on ArtMart and reach art collectors worldwide">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html">
+                    <h1>ArtMart</h1>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="sell.html" class="active">Sell Art</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sell Page Content -->
+    <main class="sell-page">
+        <div class="container">
+            <div class="sell-hero">
+                <h2>List Your Artwork</h2>
+                <p>Share your creativity with art collectors worldwide</p>
+            </div>
+
+            <div class="sell-content">
+                <div class="form-container">
+                    <form id="sellForm" class="sell-form">
+                        <div class="form-group">
+                            <label for="title">Artwork Title *</label>
+                            <input type="text" id="title" name="title" required 
+                                   placeholder="Enter the title of your artwork">
+                            <div class="error-text" id="titleError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Description *</label>
+                            <textarea id="description" name="description" required 
+                                      placeholder="Describe your artwork, technique, inspiration, etc."
+                                      rows="4"></textarea>
+                            <div class="error-text" id="descriptionError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="price">Price (INR) *</label>
+                            <input type="number" id="price" name="price" required 
+                                   min="1" step="1" placeholder="Enter price in Indian Rupees">
+                            <div class="error-text" id="priceError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="imageUpload">Artwork Image *</label>
+                            <input type="file" id="imageUpload" name="imageUpload" 
+                                   accept="image/*" required>
+                            <div class="upload-placeholder" id="uploadPlaceholder">
+                                <div class="upload-icon">📁</div>
+                                <p>Click to upload an image or drag and drop</p>
+                                <small>Supported formats: JPG, PNG, WebP (Max 5MB)</small>
+                            </div>
+                            <div class="error-text" id="imageError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="artist">Artist Name *</label>
+                            <input type="text" id="artist" name="artist" required 
+                                   placeholder="Your name or artist pseudonym">
+                            <div class="error-text" id="artistError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" name="category">
+                                <option value="painting">Painting</option>
+                                <option value="sculpture">Sculpture</option>
+                                <option value="photography">Photography</option>
+                                <option value="digital">Digital Art</option>
+                                <option value="mixed-media">Mixed Media</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="submitBtn">
+                            List Artwork
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Preview Section -->
+                <div class="preview-container" id="previewContainer" style="display: none;">
+                    <h3>Preview</h3>
+                    <div class="artwork-preview" id="artworkPreview">
+                        <div class="preview-image" id="previewImage"></div>
+                        <div class="preview-info">
+                            <h4 id="previewTitle">Artwork Title</h4>
+                            <p id="previewArtist">Artist Name</p>
+                            <p id="previewDescription">Description will appear here...</p>
+                            <div class="preview-price">
+                                <span id="previewPrice">₹0</span>
+                            </div>
+                            <div class="preview-category">
+                                <small id="previewCategory">Category</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success Message -->
+            <div class="success-message" id="successMessage" style="display: none;">
+                <div class="success-icon">✅</div>
+                <h3>Artwork Listed Successfully!</h3>
+                <p>Your artwork has been added to the marketplace and will be visible to potential buyers.</p>
+                <div class="success-actions">
+                    <button class="btn btn-secondary" onclick="resetForm()">List Another Artwork</button>
+                    <a href="index.html" class="btn btn-primary">View Marketplace</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 ArtMart. Connecting artists with art lovers worldwide.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+modules = ["nodejs-20"]
+
+[nix]
+channel = "stable-24_05"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "ArtMart Server"
+
+[[workflows.workflow]]
+name = "ArtMart Server"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npx serve . -p 5000"
+waitForPort = 5000
+
+[deployment]
+run = ["sh", "-c", "npx serve . -p 5000"]
+
+[[ports]]
+localPort = 5000
+externalPort = 80

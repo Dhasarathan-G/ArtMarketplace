@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ArtMart - Discover Amazing Art</title>
+    <meta name="description" content="Discover and purchase unique art pieces from talented artists worldwide">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html">
+                    <h1>ArtMart</h1>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="sell.html">Sell Art</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Discover Extraordinary Art</h2>
+                <p>Connect with talented artists and find the perfect piece for your collection</p>
+                <button class="btn btn-primary" onclick="scrollToProducts()">Browse All Art</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Art Carousel -->
+    <section class="featured-section">
+        <div class="container">
+            <h3>Featured Artwork</h3>
+            <div class="carousel-container">
+                <div class="carousel" id="featuredCarousel">
+                    <!-- Featured items will be populated by JavaScript -->
+                </div>
+                <button class="carousel-btn prev" onclick="moveCarousel(-1)">‹</button>
+                <button class="carousel-btn next" onclick="moveCarousel(1)">›</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- All Products Grid -->
+    <section class="products-section" id="products">
+        <div class="container">
+            <h3>All Artwork</h3>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Loading State -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Loading artwork...</p>
+    </div>
+
+    <!-- Error State -->
+    <div class="error-message" id="errorMessage" style="display: none;">
+        <p>Failed to load artwork. Please refresh the page to try again.</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 ArtMart. Connecting artists with art lovers worldwide.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

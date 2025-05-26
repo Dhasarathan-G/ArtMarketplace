@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "mystic-mountains",
+    "title": "Mystic Mountains",
+    "artist": "Aria Patel",
+    "description": "A breathtaking landscape painting capturing the ethereal beauty of the Himalayas at dawn. This piece uses traditional watercolor techniques to create a dreamlike atmosphere with soft blues and warm oranges.",
+    "price": 15000,
+    "category": "painting",
+    "imageUrl": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop",
+    "dateAdded": "2024-01-15"
+  },
+  {
+    "slug": "urban-symphony",
+    "title": "Urban Symphony",
+    "artist": "Raj Kumar",
+    "description": "A vibrant acrylic painting depicting the bustling energy of Mumbai streets. Bold strokes and vivid colors bring to life the chaos and beauty of urban India.",
+    "price": 12500,
+    "category": "painting",
+    "imageUrl": "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=300&fit=crop",
+    "dateAdded": "2024-01-10"
+  },
+  {
+    "slug": "dancing-peacock",
+    "title": "Dancing Peacock",
+    "artist": "Meera Sharma",
+    "description": "An intricate bronze sculpture inspired by classical Indian dance forms. The piece captures the grace and majesty of a peacock in full display, symbolizing beauty and pride.",
+    "price": 28000,
+    "category": "sculpture",
+    "imageUrl": "https://images.unsplash.com/photo-1594736797933-d0f06ba13ea6?w=400&h=300&fit=crop",
+    "dateAdded": "2024-01-08"
+  },
+  {
+    "slug": "digital-mandala",
+    "title": "Digital Mandala",
+    "artist": "Kiran Tech",
+    "description": "A contemporary digital artwork that reimagines traditional mandala patterns using modern design tools. The piece explores the intersection of ancient wisdom and digital innovation.",
+    "price": 8500,
+    "category": "digital",
+    "imageUrl": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop",
+    "dateAdded": "2024-01-05"
+  },
+  {
+    "slug": "monsoon-memories",
+    "title": "Monsoon Memories",
+    "artist": "Priya Iyer",
+    "description": "A photographic series capturing the essence of Indian monsoons. Shot during the 2023 monsoon season across different states, showcasing the transformative power of rain.",
+    "price": 6500,
+    "category": "photography",
+    "imageUrl": "https://images.unsplash.com/photo-1571771019784-3ff35f4f4277?w=400&h=300&fit=crop",
+    "dateAdded": "2024-01-03"
+  },
+  {
+    "slug": "heritage-fusion",
+    "title": "Heritage Fusion",
+    "artist": "Ankit Verma",
+    "description": "A mixed media artwork combining traditional Indian textiles, contemporary painting techniques, and digital elements. This piece bridges the gap between heritage crafts and modern art.",
+    "price": 18500,
+    "category": "mixed-media",
+    "imageUrl": "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=300&fit=crop",
+    "dateAdded": "2024-01-01"
+  }
+]
