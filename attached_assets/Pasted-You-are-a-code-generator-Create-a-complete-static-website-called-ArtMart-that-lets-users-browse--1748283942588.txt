@@ -1,0 +1,50 @@
+You are a code generator. Create a complete static website called “ArtMart” that lets users browse, buy, and sell art objects. The output must follow this exact folder and file structure so it can be directly deployed to GitHub Pages (i.e. pushed to a repo’s gh-pages branch):
+
+/
+├── index.html
+├── about.html
+├── sell.html
+├── products/
+│   └── [slug].html         ← one template file to be duplicated per art piece
+├── assets/
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   └── app.js
+│   └── images/             ← placeholder folder for product images
+├── _data/
+│   └── products.json       ← JSON list of all art objects
+└── README.md
+
+Requirements:
+1. index.html:
+   - Hero banner, featured art carousel, “Browse All” button linking to a grid of all products.
+2. about.html:
+   - Static company info and mission statement.
+3. sell.html:
+   - A form for sellers: title, description, price (INR), image upload (placeholder), and a client-side preview.
+   - On submit, append the new art object to _data/products.json (simulate with JavaScript).
+4. products/[slug].html:
+   - Template page that displays name, description, price, image, and a “Buy Now” button.
+   - Integrate Stripe Checkout (test API keys) to handle purchases.
+5. assets/css/style.css:
+   - Responsive layout, grid for product listings, mobile-first.
+6. assets/js/app.js:
+   - Load _data/products.json via fetch, render product grid on index.
+   - Handle routing to product pages (you may use simple URL-hash or server-side template placeholders).
+   - Simulate adding new products from sell.html into JSON (in-memory).
+   - Initialize Stripe Checkout for each product’s Buy button.
+7. _data/products.json:
+   - Include at least three sample art objects with fields: slug, title, description, price, imageUrl.
+8. README.md:
+   - Project overview, instructions to run locally (npx serve .), and deploy to GitHub Pages.
+
+Technical constraints:
+- Use only vanilla HTML5, CSS3, and ES6 JavaScript—no frameworks.
+- No build step; all pages must be static.
+- All links and asset paths must be relative.
+- Code comments explaining key sections.
+- Stripe test mode only (include your own test API key placeholder).
+- Ensure valid HTML; add <meta name="viewport" content="width=device-width, initial-scale=1">.
+
+Generate the entire directory tree with files and contents exactly as specified. Don’t include any extra files or folders.
