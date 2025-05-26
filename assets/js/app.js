@@ -105,7 +105,7 @@ async function loadProducts() {
     "description": "An intricate bronze sculpture inspired by classical Indian dance forms. The piece captures the grace and majesty of a peacock in full display, symbolizing beauty and pride.",
     "price": 28000,
     "category": "sculpture",
-    "imageUrl": "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?w=400&h=300&fit=crop",
+    "imageUrl": "https://tse4.mm.bing.net/th?id=OIP.PfakciW3Q0RECVs3QMGbNgHaHa&pid=Api&P=400&h=300",
     "dateAdded": "2024-01-08"
   },
   {
@@ -115,7 +115,7 @@ async function loadProducts() {
     "description": "A contemporary digital artwork that reimagines traditional mandala patterns using modern design tools. The piece explores the intersection of ancient wisdom and digital innovation.",
     "price": 8500,
     "category": "digital",
-    "imageUrl": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop",
+    "imageUrl": "https://tse3.mm.bing.net/th?id=OIP.qXnyD6fp43Ys3EpuYwmw2wHaEO&pid=Api&P=400&h=300",
     "dateAdded": "2024-01-05"
   },
   {
