@@ -146,7 +146,7 @@ function renderAllProducts() {
 
 // Navigate to product page
 function navigateToProduct(slug) {
-    window.location.href = `products/template.html?id=${slug}`;
+    window.location.href = `products/${slug}.html`;
 }
 
 // Carousel navigation

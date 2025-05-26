@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mystic Mountains - ArtMart</title>
+    <meta name="description" content="View artwork details and purchase securely through ArtMart">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="../index.html">
+                    <h1>ArtMart</h1>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="../about.html">About</a>
+                <a href="../sell.html">Sell Art</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Back Navigation -->
+    <div class="container">
+        <div class="back-nav">
+            <a href="../index.html" class="back-link">← Back to Gallery</a>
+        </div>
+    </div>
+
+    <!-- Product Details -->
+    <main class="product-page">
+        <div class="container">
+            <!-- Product Content -->
+            <div class="product-content">
+                <div class="product-gallery">
+                    <div class="main-image">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop" alt="Mystic Mountains" loading="lazy">
+                    </div>
+                </div>
+
+                <div class="product-info">
+                    <div class="product-header">
+                        <h1>Mystic Mountains</h1>
+                        <p class="artist-name">Aria Patel</p>
+                        <div class="product-category">
+                            <span>painting</span>
+                        </div>
+                    </div>
+
+                    <div class="product-description">
+                        <h3>Description</h3>
+                        <p>A breathtaking landscape painting capturing the ethereal beauty of the Himalayas at dawn. This piece uses traditional watercolor techniques to create a dreamlike atmosphere with soft blues and warm oranges.</p>
+                    </div>
+
+                    <div class="product-pricing">
+                        <div class="price">
+                            <span class="currency">₹</span>
+                            <span>15,000</span>
+                        </div>
+                        <small class="price-note">Price includes all taxes</small>
+                    </div>
+
+                    <div class="product-actions">
+                        <button class="btn btn-primary btn-large" id="buyNowBtn" onclick="initiatePayment()">
+                            <span id="buyBtnText">Buy Now</span>
+                            <div class="btn-spinner" id="btnSpinner" style="display: none;"></div>
+                        </button>
+                        <button class="btn btn-secondary" onclick="shareProduct()">
+                            Share
+                        </button>
+                    </div>
+
+                    <div class="product-meta">
+                        <div class="meta-item">
+                            <strong>Artwork ID:</strong>
+                            <span>mystic-mountains</span>
+                        </div>
+                        <div class="meta-item">
+                            <strong>Listed:</strong>
+                            <span>2024-01-15</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Payment Success Modal -->
+    <div class="modal" id="paymentModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Payment Processing</h3>
+            </div>
+            <div class="modal-body">
+                <div class="payment-status" id="paymentStatus">
+                    <div class="spinner"></div>
+                    <p>Processing your payment...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 ArtMart. Connecting artists with art lovers worldwide.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Stripe
+        const stripe = Stripe('pk_test_51OkXMZF9jGsOGKkWuO3eVOo00nF9KWNlU');
+        
+        // Store product data
+        window.currentProduct = {
+            slug: 'mystic-mountains',
+            title: 'Mystic Mountains',
+            artist: 'Aria Patel',
+            price: 15000
+        };
+
+        async function initiatePayment() {
+            const buyBtn = document.getElementById('buyNowBtn');
+            const btnText = document.getElementById('buyBtnText');
+            const btnSpinner = document.getElementById('btnSpinner');
+            
+            // Disable button and show loading
+            buyBtn.disabled = true;
+            btnText.style.display = 'none';
+            btnSpinner.style.display = 'inline-block';
+
+            try {
+                // Show payment modal
+                document.getElementById('paymentModal').style.display = 'flex';
+                
+                // Simulate payment processing
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Show success
+                showPaymentSuccess();
+                
+            } catch (error) {
+                console.error('Payment error:', error);
+                showPaymentError();
+            } finally {
+                // Re-enable button
+                buyBtn.disabled = false;
+                btnText.style.display = 'inline';
+                btnSpinner.style.display = 'none';
+            }
+        }
+
+        function showPaymentSuccess() {
+            document.getElementById('modalTitle').textContent = 'Payment Successful!';
+            document.getElementById('paymentStatus').innerHTML = `
+                <div class="success-icon">✅</div>
+                <h4>Thank you for your purchase!</h4>
+                <p>You have successfully purchased "${window.currentProduct.title}"</p>
+                <p>You will receive a confirmation email shortly.</p>
+                <button class="btn btn-primary" onclick="closeModal()">Continue Shopping</button>
+            `;
+        }
+
+        function showPaymentError() {
+            document.getElementById('modalTitle').textContent = 'Payment Failed';
+            document.getElementById('paymentStatus').innerHTML = `
+                <div class="error-icon">❌</div>
+                <h4>Payment could not be processed</h4>
+                <p>Please try again or use a different payment method.</p>
+                <button class="btn btn-primary" onclick="closeModal()">Try Again</button>
+            `;
+        }
+
+        function closeModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        function shareProduct() {
+            if (navigator.share) {
+                navigator.share({
+                    title: window.currentProduct.title,
+                    text: `Check out this amazing artwork: ${window.currentProduct.title}`,
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('Product link copied to clipboard!');
+                });
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('paymentModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
