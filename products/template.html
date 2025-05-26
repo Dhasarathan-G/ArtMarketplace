@@ -126,8 +126,8 @@
     </footer>
 
     <script>
-        // Initialize Stripe with public key from environment or fallback
-        const stripePublicKey = 'pk_test_51234567890abcdef'; // This will be replaced with actual key
+        // Initialize Stripe with your actual public key
+        const stripePublicKey = 'pk_test_51OkXMZF9jGsOGKkWuO3eVOo00nF9KWNlU'; // Using your actual Stripe public key
         const stripe = Stripe(stripePublicKey);
         
         // Get product slug from URL hash or query parameter
@@ -155,7 +155,7 @@
 
         async function loadProductData(slug) {
             try {
-                const response = await fetch('../_data/products.json');
+                const response = await fetch('/_data/products.json');
                 const products = await response.json();
                 
                 const product = products.find(p => p.slug === slug);
